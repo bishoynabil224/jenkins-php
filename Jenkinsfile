@@ -2,12 +2,12 @@ pipeline {
     agent { label 'php-lab' } 
 
     stages {
-        // ملحوظة: شلنا مرحلة الـ Checkout اليدوية لأن جينكينز بيعملها أوتوماتيك
+     
         
         stage('Run Unit Tests') {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    // إضافة --no-cache لحل مشكلة الـ Permission Denied
+                    
                     sh 'phpunit --no-cache --log-junit results.xml tests/'
                 }
             }
@@ -15,7 +15,7 @@ pipeline {
 
         stage('Display Results') {
             steps {
-                // عرض نتائج الاختبارات في واجهة جينكينز
+                
                 junit 'results.xml'
             }
         }
