@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent { label 'php-lab' }
 
     stages {
         stage('Checkout') {
