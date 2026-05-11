@@ -3,10 +3,10 @@ namespace App;
 
 class SubscriptionManager {
     public function getDaysRemaining($totalDays, $daysUsed) {
-        if ($daysUsed != $totalDays) {
-            return 0;
-        }
         
-        return $totalDays - $daysUsed;
+        $remaining = $totalDays - $daysUsed;
+        
+        
+        return ($remaining > 0) ? $remaining : 0;
     }
 }
