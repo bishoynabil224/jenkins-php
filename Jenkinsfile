@@ -1,17 +1,20 @@
 pipeline {
-    agent { label 'php-lab' }
+
+    agent { label 'php-lab' } 
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/bishoynabil224/jenkins-php'
+            
+                checkout scm
             }
         }
 
         stage('Run Unit Tests') {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    sh '/usr/local/bin/phpunit --log-junit results.xml tests/'
+                    // التأكد من مسار phpunit (لو مش متأكد استخدم 'phpunit' بس لو مضاف للـ PATH)
+                    sh 'phpunit --log-junit results.xml tests/'
                 }
             }
         }
