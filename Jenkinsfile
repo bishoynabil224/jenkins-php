@@ -1,26 +1,21 @@
 pipeline {
-
     agent { label 'php-lab' } 
 
     stages {
-        stage('Checkout') {
-            steps {
-            
-                checkout scm
-            }
-        }
-
+        // ملحوظة: شلنا مرحلة الـ Checkout اليدوية لأن جينكينز بيعملها أوتوماتيك
+        
         stage('Run Unit Tests') {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    // التأكد من مسار phpunit (لو مش متأكد استخدم 'phpunit' بس لو مضاف للـ PATH)
-                    sh 'phpunit --log-junit results.xml tests/'
+                    // إضافة --no-cache لحل مشكلة الـ Permission Denied
+                    sh 'phpunit --no-cache --log-junit results.xml tests/'
                 }
             }
         }
 
         stage('Display Results') {
             steps {
+                // عرض نتائج الاختبارات في واجهة جينكينز
                 junit 'results.xml'
             }
         }
